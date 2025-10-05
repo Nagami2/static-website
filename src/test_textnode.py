@@ -51,7 +51,7 @@ class TestTextNode(unittest.TestCase):
         expected_html_node = LeafNode("", "Just some plain text")
         self.assertEqual(node.text_node_to_html_node(), expected_html_node)
 
-
+    
 
 if __name__ == "__main__":
     unittest.main()
