@@ -1,7 +1,6 @@
-from src.textnode import TextNode, TextType
-from src.htmlnode import HTMLNode, LeafNode, ParentNode
-from src.block_markdown import markdown_to_blocks, block_to_block_type, BlockType
-from src.inline_markdown import text_to_textnodes
+from htmlnode import HTMLNode, LeafNode, ParentNode
+from block_markdown import markdown_to_blocks, block_to_block_type, BlockType
+from inline_markdown import text_to_textnodes
 
 from typing import List
 import re
