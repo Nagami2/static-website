@@ -1,4 +1,4 @@
-from textnode import TextNode, TextType
+from src.textnode import TextNode, TextType
 
 def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextType):
     new_nodes = []
@@ -122,8 +122,10 @@ def text_to_textnodes(text):
     nodes = split_nodes_link(nodes)
 
     # 3. split by bold, italic and code delimiters
+    # Process bold first (longer delimiter), then italic (both * and _), then code
     nodes = split_nodes_delimiter(nodes, "**", TextType.BOLD)
     nodes = split_nodes_delimiter(nodes, "*", TextType.ITALIC)
+    nodes = split_nodes_delimiter(nodes, "_", TextType.ITALIC)
     nodes = split_nodes_delimiter(nodes, "`", TextType.CODE)
 
     return nodes

@@ -6,7 +6,7 @@ class HTMLNode:
     def __init__(self, tag: str = "", value: str = "", children: Optional[List["HTMLNode"]] = None, props: Optional[Dict[str, str]] = None):
         self.tag = tag
         self.value = value
-        self.children = children if children is not None else []
+        self.children = list(children) if children is not None else []  # Convert to list to handle any sequence
         self.props = props if props is not None else {}
 
     def to_html(self):
@@ -53,7 +53,7 @@ class ParentNode(HTMLNode):
     def __init__(self, tag: str, children: List["HTMLNode"], props: Optional[Dict[str, str]] = None):
         if not tag:
             raise ValueError("Invalid HTML: ParentNode must have a tag")
-        if not children:
+        if children is None or not children:
             raise ValueError("Invalid HTML: ParentNode must have at least one child")
         super().__init__(tag, "", children, props)
 
