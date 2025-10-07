@@ -1,4 +1,5 @@
 import os
+import sys
 import shutil
 
 from generate_page import generate_page, generate_pages_recursive
@@ -41,19 +42,18 @@ def main():
     copy_directory_recursively(source_path, destination_path)
     print("Copy operation completed.")
 
-    # # call the new generate_page function
-    # generate_page(
-    #     from_path="content/index.md",
-    #     template_path="template.html",
-    #     dest_path="public/index.html"
-    # )
-    # --- Step 2: Generate content recursively ---
+    # read base path from command line argument
+    basepath = "/"
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    
+    # call the generate_page function recursively
     print("Generating pages from content...")
     content_dir = "content"
     template_path = "template.html"
-    dest_dir = "public"
+    dest_dir = "docs"
     
-    generate_pages_recursive(content_dir, template_path, dest_dir)
+    generate_pages_recursive(content_dir, template_path, dest_dir, basepath)
     
     print("Static site generation complete!")
     

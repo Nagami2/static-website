@@ -24,7 +24,7 @@ import os
 # Assuming markdown_to_html_node is in another file, e.g., 'block_markdown'
 # from block_markdown import markdown_to_html_node
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, base_path="/"):
     """
     Generates a static HTML page from a markdown file and a template.
     """
@@ -45,6 +45,10 @@ def generate_page(from_path, template_path, dest_path):
     final_html = template_content.replace("{{ Title }}", title)
     final_html = final_html.replace("{{ Content }}", html_content)
 
+    # replace relative paths with the provided base_path
+    final_html = final_html.replace('href="/', f'href="{base_path}')
+    final_html = final_html.replace('src="/', f'src="{base_path}')
+
     # 4. Write the new HTML to the destination path
     dest_dir = os.path.dirname(dest_path)
     if not os.path.exists(dest_dir):
@@ -53,7 +57,7 @@ def generate_page(from_path, template_path, dest_path):
     with open(dest_path, 'w') as f:
         f.write(final_html)
 
-def generate_pages_recursive(content_dir_path, template_path, dest_dir_path):
+def generate_pages_recursive(content_dir_path, template_path, dest_dir_path, base_path="/"):
     """
     Recursively generates HTML pages from markdown files in a content directory.
     """
@@ -65,7 +69,7 @@ def generate_pages_recursive(content_dir_path, template_path, dest_dir_path):
         if os.path.isdir(source_path):
             # Create the corresponding directory in the destination
             os.makedirs(dest_path, exist_ok=True)
-            generate_pages_recursive(source_path, template_path, dest_path)
+            generate_pages_recursive(source_path, template_path, dest_path, base_path)  
         
         # If the item is a markdown file, generate a page for it
         elif source_path.endswith(".md"):
@@ -73,4 +77,4 @@ def generate_pages_recursive(content_dir_path, template_path, dest_dir_path):
             html_dest_path = os.path.splitext(dest_path)[0] + ".html"
             
             # Call the function from the previous lesson
-            generate_page(source_path, template_path, html_dest_path)
+            generate_page(source_path, template_path, html_dest_path, base_path)
