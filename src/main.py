@@ -8,7 +8,7 @@ from generate_page import generate_page, generate_pages_recursive
 def main():
     # define source and destination paths
     source_path = "static"
-    destination_path = "public"
+    destination_path = "docs"
 
     print(f"Preparing to copy from '{source_path}' to '{destination_path}'...")
 
